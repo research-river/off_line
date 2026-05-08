@@ -45,7 +45,7 @@ map.on('load', () => {
                     filter: ['in', '$type', 'LineString'],
                     paint: {
                         'line-color': item.lineColor,
-                        'line-width': 3,
+                        'line-width': 5,
                         'line-opacity': 0.85
                     }
                 });

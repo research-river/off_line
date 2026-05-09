@@ -22,6 +22,7 @@ const dataFiles = [
     { id: 'suijin', file: 'arakawa_suijin_marker.kml', type: 'kml', lineColor: '#c0392b', pointColor: '#e74c3c' },
     { id: 'toilet', file: 'トイレmap 荒川CR0508.kml', type: 'kml', lineColor: '#0f766e', pointColor: '#0ea5e9' },
     { id: 'route',  file: 'd_west.gpx',                type: 'gpx', lineColor: '#d95e21', pointColor: '#3498db' },
+    { id: 'kumagaya-2026', file: '2026_kumagaya.gpx',  type: 'gpx', lineColor: '#431296', pointColor: '#3498db' },
 ];
 
 const layerIdsByGroup = {};

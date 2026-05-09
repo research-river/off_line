@@ -1,4 +1,4 @@
-const CACHE = 'suijin-map-v3';
+const CACHE = 'suijin-map-v4';
 
 const APP_SHELL = [
   './suijin_map.html',
@@ -11,6 +11,7 @@ const APP_SHELL = [
   './arakawa_suijin_marker.kml',
   './トイレmap 荒川CR0508.kml',
   './d_west.gpx',
+  './2026_kumagaya.gpx',
 ];
 
 const OFFLINE_PAGE = './suijin_map.html';

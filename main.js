@@ -87,7 +87,7 @@ map.on('load', () => {
                         filter: ['==', '$type', 'Point'],
                         layout: {
                             'icon-image': 'toilet-icon',
-                            'icon-size': 5,
+                            'icon-size': 0.05,
                             'icon-allow-overlap': true
                         }
                     });

@@ -45,6 +45,12 @@ function setGroupVisibility(groupId, visible) {
 }
 
 map.on('load', () => {
+    new Promise(resolve => {
+        map.loadImage('toilet.png', (error, image) => {
+            if (!error) map.addImage('toilet-icon', image);
+            resolve();
+        });
+    }).then(() => {
     dataFiles.forEach(item => {
         const id = 'layer-' + item.id;
         layerIdsByGroup[item.id] = [id + '-line', id + '-point'];
@@ -72,7 +78,20 @@ map.on('load', () => {
                     }
                 });
 
-                // マーカー（円）
+                // マーカー（トイレはPNGアイコン、その他は円）
+                if (item.id === 'toilet') {
+                    map.addLayer({
+                        id: id + '-point',
+                        type: 'symbol',
+                        source: id,
+                        filter: ['==', '$type', 'Point'],
+                        layout: {
+                            'icon-image': 'toilet-icon',
+                            'icon-size': 0.05,
+                            'icon-allow-overlap': true
+                        }
+                    });
+                } else {
                 map.addLayer({
                     id: id + '-point',
                     type: 'circle',
@@ -86,6 +105,7 @@ map.on('load', () => {
                         'circle-opacity': 0.9
                     }
                 });
+                }
 
                 const toggle = document.querySelector('[data-layer-toggle="' + item.id + '"]');
                 if (toggle) {
@@ -115,4 +135,5 @@ map.on('load', () => {
             setGroupVisibility(event.target.dataset.layerToggle, event.target.checked);
         });
     });
+    }); // end .then
 });

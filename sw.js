@@ -1,4 +1,4 @@
-const CACHE = 'suijin-map-v6';
+const CACHE = 'suijin-map-v7';
 
 const APP_SHELL = [
   './suijin_map.html',
@@ -8,7 +8,6 @@ const APP_SHELL = [
   './maplibre-gl.js',
   './maplibre-gl.css',
   './togeojson.min.js',
-  './toilet.png',
   './arakawa_suijin_marker.kml',
   './トイレmap 荒川CR0508.kml',
   './d_west.gpx',

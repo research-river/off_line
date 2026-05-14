@@ -31,7 +31,7 @@ const dataFiles = [
   },
   {
     id: "toilet",
-    file: "トイレmap 荒川CR0508.kml",
+    file: "toilet.kml",
     type: "kml",
     lineColor: "#0f766e",
     pointColor: "#0ea5e9",

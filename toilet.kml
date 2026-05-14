@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2">
   <Document>
-    <name>トイレmap 荒川CR0508</name>
+    <name>toilet</name>
     <Style id="icon-1677-F57C00-normal">
       <IconStyle>
         <color>ff007cf5</color>
@@ -1961,11 +1961,11 @@
     </Placemark>
     <Placemark>
       <name>船堀日枝神社</name>
-      <description><![CDATA[<img src="https://lh3.googleusercontent.com/umsh/AN6v0v7J5WaPq6nbYa18DWAxxCBAPdEO3PzUCFzn_gNJvd84flx9Jrmrc47cmgxVoly6bcxCmBUCHHNjoK0zPucuKfnp_aaafbtlQJY0lc7_dzzWFd-IdUEcjR4db1arpNwJkW16XpLuPblyUwedE4R5ycmauySHQjIy0oOULHMtW5U9d4q5m20nQS__GWPTVpLYxFIUaJBhSRqKkP9VYwnXl-AZSvb2xbqWoUZHiKXgMXhTA_Q8gnPGVVNeUpwrcIKVBGZHXcRvvJq9oVAxvYY6-FGTA-61iZlsafuipYFGuNrVcqU39kwJEDU2Z3Ghs68gy-uHC0FfNDcgCmKHELt6cfo6sMCJP4oP3zSlnTzsdzhCw0W7_58rIhN0kIZ45z5yCTCWmHlAE0oJoQ5EKHwsE7GxpluSQKyM9_LpnHJjUs9a1honajIcRnUa9t9RzgLJ1aCWRuAd3eluQZiB7qhEbqoKHxmMQNZW9tjDbvWnLpjoVtTvyqX8udhME55k9RFW42iuuKuaJIhyFW1cqprwP4v5D6SFK6dXRdw0EHsfl1cEn8nzxPG2v5VMg7NL6AmO7lOKRz1oFrCWUfHNXn8gIrMH4ZgPPImpUxyL4hYN7_7mrCuEBGKIsX_l_-WfSEfDabEJgZVam76FFtncCW_eRfvmGbxDQ5lGKXPFzXvZw91ZTC3gsH3bcNusHWIm6NL8ajM1IMgSntTHnlGfqzpkAfVfEN-N" height="200" width="auto" /><br><br>]]></description>
+      <description><![CDATA[<img src="https://lh3.googleusercontent.com/umsh/AN6v0v7CuNBswfPCEaatVdFmZf0T_4b6u3IFM32m2srtKLj6ZLWsSS1owNjtKK7UlbnYyI4ln8F6bxHErEkyacMn2vapssQRIHh1JsamuXJzlsUNlLWx-f5-QX3IEjf1Up55p78yMpyLoC7Y6DroVXLneM6X4_7BnuwCwe68UOqSl6zSw3p-CrH9I2sRYElZcKq9eQmDHDkg0yKLXuqpJYQms6icCIadMHzSLDSbZlsXKMM_zBdvHCZz-sanesjkTQMTT6qvV3DP2hMMIR6uXs7XwlDHqjVkTtHOenK_0-TSWp3MhT29lI9rnuPS-yop3wMD5uOHtYqU0Jnyi55ZdoNEflNSTx4pgmo8KVnjRwbGYu8nLPN_vERG8EJz3jGFfovQqzEBS-csPjt8FPk4ivP9Nq9n0gFZ3WVzt0NpmP9qrsKaXG-O7ihSXqzn0UYJL8--WSXIgi1M6PlzwFSN8Fsw18e97S6Aa5xzmLrYzJIjyS4sGLmSzDHS0uGx1vIfdG6u4xuvJqsuuiDAuiuug6fWtB6PyEFGnY9FzF7Ghh7P75X4yDFS5Fy_wUQe9CKJXN-QhX2TrcTI7FS_CtaMKhnyeganlW38iwDX06jRNs-gvuggnqJ2ruZGOxQBo6ms17dQd-01rHw6gJp7y4iLCVy51nJ8aJRLDygzaydyvZJ8oct0OnGfv_UnAwr2Azo-I0bSMVmiATmzEEJ67Q-3dnfhPkEkf8_G" height="200" width="auto" /><br><br>]]></description>
       <styleUrl>#icon-1677-F57C00</styleUrl>
       <ExtendedData>
         <Data name="gx_media_links">
-          <value>https://lh3.googleusercontent.com/umsh/AN6v0v7J5WaPq6nbYa18DWAxxCBAPdEO3PzUCFzn_gNJvd84flx9Jrmrc47cmgxVoly6bcxCmBUCHHNjoK0zPucuKfnp_aaafbtlQJY0lc7_dzzWFd-IdUEcjR4db1arpNwJkW16XpLuPblyUwedE4R5ycmauySHQjIy0oOULHMtW5U9d4q5m20nQS__GWPTVpLYxFIUaJBhSRqKkP9VYwnXl-AZSvb2xbqWoUZHiKXgMXhTA_Q8gnPGVVNeUpwrcIKVBGZHXcRvvJq9oVAxvYY6-FGTA-61iZlsafuipYFGuNrVcqU39kwJEDU2Z3Ghs68gy-uHC0FfNDcgCmKHELt6cfo6sMCJP4oP3zSlnTzsdzhCw0W7_58rIhN0kIZ45z5yCTCWmHlAE0oJoQ5EKHwsE7GxpluSQKyM9_LpnHJjUs9a1honajIcRnUa9t9RzgLJ1aCWRuAd3eluQZiB7qhEbqoKHxmMQNZW9tjDbvWnLpjoVtTvyqX8udhME55k9RFW42iuuKuaJIhyFW1cqprwP4v5D6SFK6dXRdw0EHsfl1cEn8nzxPG2v5VMg7NL6AmO7lOKRz1oFrCWUfHNXn8gIrMH4ZgPPImpUxyL4hYN7_7mrCuEBGKIsX_l_-WfSEfDabEJgZVam76FFtncCW_eRfvmGbxDQ5lGKXPFzXvZw91ZTC3gsH3bcNusHWIm6NL8ajM1IMgSntTHnlGfqzpkAfVfEN-N</value>
+          <value>https://lh3.googleusercontent.com/umsh/AN6v0v7CuNBswfPCEaatVdFmZf0T_4b6u3IFM32m2srtKLj6ZLWsSS1owNjtKK7UlbnYyI4ln8F6bxHErEkyacMn2vapssQRIHh1JsamuXJzlsUNlLWx-f5-QX3IEjf1Up55p78yMpyLoC7Y6DroVXLneM6X4_7BnuwCwe68UOqSl6zSw3p-CrH9I2sRYElZcKq9eQmDHDkg0yKLXuqpJYQms6icCIadMHzSLDSbZlsXKMM_zBdvHCZz-sanesjkTQMTT6qvV3DP2hMMIR6uXs7XwlDHqjVkTtHOenK_0-TSWp3MhT29lI9rnuPS-yop3wMD5uOHtYqU0Jnyi55ZdoNEflNSTx4pgmo8KVnjRwbGYu8nLPN_vERG8EJz3jGFfovQqzEBS-csPjt8FPk4ivP9Nq9n0gFZ3WVzt0NpmP9qrsKaXG-O7ihSXqzn0UYJL8--WSXIgi1M6PlzwFSN8Fsw18e97S6Aa5xzmLrYzJIjyS4sGLmSzDHS0uGx1vIfdG6u4xuvJqsuuiDAuiuug6fWtB6PyEFGnY9FzF7Ghh7P75X4yDFS5Fy_wUQe9CKJXN-QhX2TrcTI7FS_CtaMKhnyeganlW38iwDX06jRNs-gvuggnqJ2ruZGOxQBo6ms17dQd-01rHw6gJp7y4iLCVy51nJ8aJRLDygzaydyvZJ8oct0OnGfv_UnAwr2Azo-I0bSMVmiATmzEEJ67Q-3dnfhPkEkf8_G</value>
         </Data>
       </ExtendedData>
       <Point>
@@ -2070,6 +2070,15 @@
       <Point>
         <coordinates>
           139.5405993,35.9138045,0
+        </coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name>公衆トイレ</name>
+      <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+      <Point>
+        <coordinates>
+          139.5969146,35.8530815,0
         </coordinates>
       </Point>
     </Placemark>

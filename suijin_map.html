@@ -1,36 +1,65 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="ja">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>調査用水神碑マップ</title>
-    <meta name="description" content="荒川沿い水神碑フィールド調査マップ">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="水神碑">
-    <meta name="theme-color" content="#5c7a5c">
-    <link rel="manifest" href="manifest.json">
-    <link href="style.css" rel="stylesheet">
-    <link href="maplibre-gl.css" rel="stylesheet">
-    <script src="maplibre-gl.js"></script>
-    <script src="togeojson.min.js"></script>
-</head>
-<body>
-    <div class="layer-panel" aria-label="表示切替">
-        <label><input type="checkbox" data-layer-toggle="suijin" checked> 水神碑</label>
-        <label><input type="checkbox" data-layer-toggle="toilet" checked> トイレ</label>
-        <label><input type="checkbox" data-layer-toggle="route" checked> 江戸川区東ルート</label>
-        <label><input type="checkbox" data-layer-toggle="kumagaya-2026" checked> 熊谷2026ルート</label>
-    </div>
-    <div id="map"></div>
-    <script src="main.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').then(registration => {
-                registration.update();
-            });
-        }
-    </script>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>調査用水神碑マップ</title>
+        <meta name="description" content="荒川沿い水神碑フィールド調査マップ" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+        />
+        <meta name="apple-mobile-web-app-title" content="水神碑" />
+        <meta name="theme-color" content="#5c7a5c" />
+        <link rel="manifest" href="manifest.json" />
+        <link href="style.css" rel="stylesheet" />
+        <link href="maplibre-gl.css" rel="stylesheet" />
+        <script src="maplibre-gl.js"></script>
+        <script src="togeojson.min.js"></script>
+    </head>
+    <body>
+        <div class="layer-panel" aria-label="表示切替">
+            <label
+                ><input type="checkbox" data-layer-toggle="suijin" checked />
+                水神碑</label
+            >
+            <label
+                ><input type="checkbox" data-layer-toggle="toilet" checked />
+                トイレ</label
+            >
+            <label
+                ><input type="checkbox" data-layer-toggle="route" checked />
+                江戸川区東ルート</label
+            >
+            <label
+                ><input
+                    type="checkbox"
+                    data-layer-toggle="outbound_kumagaya-2026"
+                    checked
+                />
+                熊谷往路ルート</label
+            >
+            <label
+                ><input
+                    type="checkbox"
+                    data-layer-toggle="return_kumagaya-2026"
+                    checked
+                />
+                熊谷復路ルート</label
+            >
+        </div>
+        <div id="map"></div>
+        <script src="main.js"></script>
+        <script>
+            if ("serviceWorker" in navigator) {
+                navigator.serviceWorker
+                    .register("./sw.js")
+                    .then((registration) => {
+                        registration.update();
+                    });
+            }
+        </script>
+    </body>
 </html>

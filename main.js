@@ -57,13 +57,6 @@ const dataFiles = [
     lineColor: "#961247",
     pointColor: "#3498db",
   },
-  {
-    id: "4-11",
-    file: "4月11日.gpx",
-    type: "gpx",
-    lineColor: "#4338ca",
-    pointColor: "#4338ca",
-  },
 ];
 
 const layerIdsByGroup = {};

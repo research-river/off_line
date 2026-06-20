@@ -60,6 +60,7 @@ const dataFiles = [
 ];
 
 const layerIdsByGroup = {};
+let toiletIconLoaded = false;
 
 function escapeHtml(value) {
   return String(value)
@@ -82,10 +83,369 @@ function setGroupVisibility(groupId, visible) {
   });
 }
 
-map.on("load", () => {
-  let toiletIconLoaded = false;
+// GeoJSONをline/pointレイヤーとして地図に追加する（静的ファイル・ドロップ追加分の両方で利用）
+function addGeoJSONLayer(id, geojson, options) {
+  layerIdsByGroup[id] = [id + "-line", id + "-point"];
 
-  new Promise((resolve, reject) => {
+  map.addSource(id, { type: "geojson", data: geojson });
+
+  // ルートライン
+  map.addLayer({
+    id: id + "-line",
+    type: "line",
+    source: id,
+    filter: ["in", "$type", "LineString"],
+    paint: {
+      "line-color": options.lineColor,
+      "line-width": 5,
+      "line-opacity": 0.85,
+    },
+  });
+
+  // マーカー（トイレはPNGアイコン、その他は円）
+  if (options.useToiletIcon && toiletIconLoaded) {
+    map.addLayer({
+      id: id + "-point",
+      type: "symbol",
+      source: id,
+      filter: ["==", "$type", "Point"],
+      layout: {
+        "icon-image": "toilet-icon",
+        "icon-size": 0.05,
+        "icon-allow-overlap": true,
+      },
+    });
+  } else {
+    map.addLayer({
+      id: id + "-point",
+      type: "circle",
+      source: id,
+      filter: ["==", "$type", "Point"],
+      paint: {
+        "circle-radius": 9,
+        "circle-color": options.pointColor,
+        "circle-stroke-width": 2,
+        "circle-stroke-color": "#ffffff",
+        "circle-opacity": 0.9,
+      },
+    });
+  }
+
+  // マーカータップでポップアップ
+  map.on("click", id + "-point", (e) => {
+    const props = e.features[0].properties;
+    const name = props.name || "（名称なし）";
+    const rawDesc = props.description || "";
+    const desc = rawDesc
+      .replace(/<img[^>]*>/gi, "")
+      .replace(/<[^>]*>/g, "")
+      .trim();
+    new maplibregl.Popup({ maxWidth: "240px" })
+      .setLngLat(e.features[0].geometry.coordinates)
+      .setHTML(
+        "<strong>" +
+          escapeHtml(name) +
+          "</strong>" +
+          (desc ? "<br><small>" + escapeHtml(desc) + "</small>" : ""),
+      )
+      .addTo(map);
+  });
+
+  map.on("mouseenter", id + "-point", () => {
+    map.getCanvas().style.cursor = "pointer";
+  });
+  map.on("mouseleave", id + "-point", () => {
+    map.getCanvas().style.cursor = "";
+  });
+}
+
+function removeGeoJSONLayer(id) {
+  [id + "-line", id + "-point"].forEach((layerId) => {
+    if (map.getLayer(layerId)) map.removeLayer(layerId);
+  });
+  if (map.getSource(id)) map.removeSource(id);
+  delete layerIdsByGroup[id];
+}
+
+// ============================================================
+// ドロップしたGPX/KMLをIndexedDBに保存し、次回起動時も復元する
+// ============================================================
+const CUSTOM_DB_NAME = "suijin-map-custom-layers";
+const CUSTOM_DB_VERSION = 1;
+const CUSTOM_STORE_NAME = "layers";
+
+function openCustomLayerDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(CUSTOM_DB_NAME, CUSTOM_DB_VERSION);
+    request.onupgradeneeded = () => {
+      request.result.createObjectStore(CUSTOM_STORE_NAME, { keyPath: "id" });
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function saveCustomLayerRecord(record) {
+  return openCustomLayerDB().then(
+    (db) =>
+      new Promise((resolve, reject) => {
+        const tx = db.transaction(CUSTOM_STORE_NAME, "readwrite");
+        tx.objectStore(CUSTOM_STORE_NAME).put(record);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      }),
+  );
+}
+
+function deleteCustomLayerRecord(id) {
+  return openCustomLayerDB().then(
+    (db) =>
+      new Promise((resolve, reject) => {
+        const tx = db.transaction(CUSTOM_STORE_NAME, "readwrite");
+        tx.objectStore(CUSTOM_STORE_NAME).delete(id);
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+      }),
+  );
+}
+
+function getAllCustomLayerRecords() {
+  return openCustomLayerDB().then(
+    (db) =>
+      new Promise((resolve, reject) => {
+        const tx = db.transaction(CUSTOM_STORE_NAME, "readonly");
+        const request = tx.objectStore(CUSTOM_STORE_NAME).getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      }),
+  );
+}
+
+const customLayerPanel = document.getElementById("customLayerPanel");
+const customPalette = [
+  "#16a34a",
+  "#ca8a04",
+  "#9333ea",
+  "#0891b2",
+  "#dc2626",
+  "#4338ca",
+];
+let customLayerCount = 0;
+
+function nextCustomColor() {
+  const color = customPalette[customLayerCount % customPalette.length];
+  customLayerCount += 1;
+  return color;
+}
+
+function createCustomLayerRow(record) {
+  const row = document.createElement("div");
+  row.className = "custom-layer-row";
+  row.dataset.customLayerId = record.id;
+
+  const label = document.createElement("label");
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = true;
+  checkbox.addEventListener("change", () => {
+    setGroupVisibility(record.id, checkbox.checked);
+  });
+
+  const name = document.createElement("span");
+  name.className = "custom-layer-name";
+  name.textContent = record.name;
+
+  label.appendChild(checkbox);
+  label.appendChild(name);
+
+  const deleteButton = document.createElement("button");
+  deleteButton.type = "button";
+  deleteButton.textContent = "×";
+  deleteButton.setAttribute("aria-label", record.name + " を削除");
+  deleteButton.addEventListener("click", () => {
+    removeCustomLayer(record.id);
+  });
+
+  row.appendChild(label);
+  row.appendChild(deleteButton);
+  customLayerPanel.appendChild(row);
+}
+
+function addCustomLayer(record, persist) {
+  let geojson;
+  try {
+    const doc = new DOMParser().parseFromString(record.xml, "text/xml");
+    geojson =
+      record.fileType === "gpx" ? toGeoJSON.gpx(doc) : toGeoJSON.kml(doc);
+  } catch (error) {
+    console.warn(record.name + " の解析に失敗しました", error);
+    return;
+  }
+
+  addGeoJSONLayer(record.id, geojson, {
+    lineColor: record.lineColor,
+    pointColor: record.pointColor,
+  });
+  createCustomLayerRow(record);
+
+  if (persist) {
+    saveCustomLayerRecord(record).catch((error) =>
+      console.warn("カスタムレイヤーの保存に失敗しました", error),
+    );
+  }
+}
+
+function removeCustomLayer(id) {
+  removeGeoJSONLayer(id);
+  const row = customLayerPanel.querySelector(
+    '[data-custom-layer-id="' + id + '"]',
+  );
+  if (row) row.remove();
+  deleteCustomLayerRecord(id).catch((error) =>
+    console.warn("カスタムレイヤーの削除に失敗しました", error),
+  );
+}
+
+function loadCustomLayersFromDB() {
+  getAllCustomLayerRecords()
+    .then((records) => {
+      records
+        .sort((a, b) => a.createdAt - b.createdAt)
+        .forEach((record) => {
+          customLayerCount += 1;
+          addCustomLayer(record, false);
+        });
+    })
+    .catch((error) =>
+      console.warn("カスタムレイヤーの読み込みに失敗しました", error),
+    );
+}
+
+function readFileAsText(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(reader.error);
+    reader.readAsText(file);
+  });
+}
+
+function handleDroppedFiles(files) {
+  Array.from(files).forEach((file) => {
+    const lower = file.name.toLowerCase();
+    const fileType = lower.endsWith(".gpx")
+      ? "gpx"
+      : lower.endsWith(".kml")
+        ? "kml"
+        : null;
+
+    if (!fileType) {
+      console.warn("対応していないファイル形式です: " + file.name);
+      return;
+    }
+
+    readFileAsText(file)
+      .then((xml) => {
+        const color = nextCustomColor();
+        addCustomLayer(
+          {
+            id:
+              "custom-" +
+              Date.now() +
+              "-" +
+              Math.random().toString(36).slice(2, 8),
+            name: file.name.replace(/\.(gpx|kml)$/i, ""),
+            fileType,
+            xml,
+            lineColor: color,
+            pointColor: color,
+            createdAt: Date.now(),
+          },
+          true,
+        );
+      })
+      .catch((error) =>
+        console.warn(file.name + " の読み込みに失敗しました", error),
+      );
+  });
+}
+
+function setupDragAndDrop() {
+  const dropHint = document.getElementById("dropHint");
+  let dragCounter = 0;
+
+  window.addEventListener("dragenter", (event) => {
+    if (!event.dataTransfer || !event.dataTransfer.types.includes("Files"))
+      return;
+    event.preventDefault();
+    dragCounter += 1;
+    dropHint.hidden = false;
+  });
+
+  window.addEventListener("dragover", (event) => {
+    if (!event.dataTransfer || !event.dataTransfer.types.includes("Files"))
+      return;
+    event.preventDefault();
+  });
+
+  window.addEventListener("dragleave", () => {
+    dragCounter = Math.max(0, dragCounter - 1);
+    if (dragCounter === 0) dropHint.hidden = true;
+  });
+
+  window.addEventListener("drop", (event) => {
+    if (!event.dataTransfer || !event.dataTransfer.files.length) return;
+    event.preventDefault();
+    dragCounter = 0;
+    dropHint.hidden = true;
+    handleDroppedFiles(event.dataTransfer.files);
+  });
+}
+
+// ============================================================
+// 走行中（停止していない）は地図を全画面メッセージで隠す
+// GPS速度が信頼できる範囲で0付近のときだけ地図を表示する
+// ============================================================
+const STOP_SPEED_THRESHOLD = 0.5; // m/s（≒1.8km/h）以下を「停止」とみなす
+const MAX_ACCEPTABLE_ACCURACY = 30; // m。これより精度が悪い測位は無視する
+
+function setupMotionLock() {
+  const motionOverlay = document.getElementById("motionOverlay");
+  const motionStatusText = document.getElementById("motionStatusText");
+
+  function setOverlay(visible, message) {
+    motionOverlay.hidden = !visible;
+    if (message) motionStatusText.textContent = message;
+  }
+
+  if (!("geolocation" in navigator)) {
+    setOverlay(false);
+    return;
+  }
+
+  navigator.geolocation.watchPosition(
+    (position) => {
+      const { speed, accuracy } = position.coords;
+
+      // 速度不明・精度不良の測位は判定に使わず、直前の表示状態を維持する
+      if (speed === null || accuracy > MAX_ACCEPTABLE_ACCURACY) return;
+
+      const isMoving = speed > STOP_SPEED_THRESHOLD;
+      setOverlay(
+        isMoving,
+        "🚴 走行中は地図を表示しません\n安全のため、停止してからご確認ください",
+      );
+    },
+    (error) => {
+      console.warn("位置情報の取得に失敗しました", error);
+      setOverlay(false); // GPSが使えない場合は地図を表示する（フェールオープン）
+    },
+    { enableHighAccuracy: true, maximumAge: 2000, timeout: 10000 },
+  );
+}
+
+map.on("load", () => {
+  new Promise((resolve) => {
     const img = new Image();
     img.onload = () => {
       try {
@@ -103,9 +463,6 @@ map.on("load", () => {
     img.src = "toilet.png";
   }).then(() => {
     dataFiles.forEach((item) => {
-      const id = "layer-" + item.id;
-      layerIdsByGroup[item.id] = [id + "-line", id + "-point"];
-
       fetch(item.file)
         .then((r) => r.text())
         .then((text) => {
@@ -113,49 +470,11 @@ map.on("load", () => {
           const geojson =
             item.type === "gpx" ? toGeoJSON.gpx(doc) : toGeoJSON.kml(doc);
 
-          map.addSource(id, { type: "geojson", data: geojson });
-
-          // ルートライン
-          map.addLayer({
-            id: id + "-line",
-            type: "line",
-            source: id,
-            filter: ["in", "$type", "LineString"],
-            paint: {
-              "line-color": item.lineColor,
-              "line-width": 5,
-              "line-opacity": 0.85,
-            },
+          addGeoJSONLayer(item.id, geojson, {
+            lineColor: item.lineColor,
+            pointColor: item.pointColor,
+            useToiletIcon: item.id === "toilet",
           });
-
-          // マーカー（トイレはPNGアイコン、その他は円）
-          if (item.id === "toilet" && toiletIconLoaded) {
-            map.addLayer({
-              id: id + "-point",
-              type: "symbol",
-              source: id,
-              filter: ["==", "$type", "Point"],
-              layout: {
-                "icon-image": "toilet-icon",
-                "icon-size": 0.05,
-                "icon-allow-overlap": true,
-              },
-            });
-          } else {
-            map.addLayer({
-              id: id + "-point",
-              type: "circle",
-              source: id,
-              filter: ["==", "$type", "Point"],
-              paint: {
-                "circle-radius": 9,
-                "circle-color": item.pointColor,
-                "circle-stroke-width": 2,
-                "circle-stroke-color": "#ffffff",
-                "circle-opacity": 0.9,
-              },
-            });
-          }
 
           const toggle = document.querySelector(
             '[data-layer-toggle="' + item.id + '"]',
@@ -163,33 +482,6 @@ map.on("load", () => {
           if (toggle) {
             setGroupVisibility(item.id, toggle.checked);
           }
-
-          // マーカータップでポップアップ
-          map.on("click", id + "-point", (e) => {
-            const props = e.features[0].properties;
-            const name = props.name || "（名称なし）";
-            const rawDesc = props.description || "";
-            const desc = rawDesc
-              .replace(/<img[^>]*>/gi, "")
-              .replace(/<[^>]*>/g, "")
-              .trim();
-            new maplibregl.Popup({ maxWidth: "240px" })
-              .setLngLat(e.features[0].geometry.coordinates)
-              .setHTML(
-                "<strong>" +
-                  escapeHtml(name) +
-                  "</strong>" +
-                  (desc ? "<br><small>" + escapeHtml(desc) + "</small>" : ""),
-              )
-              .addTo(map);
-          });
-
-          map.on("mouseenter", id + "-point", () => {
-            map.getCanvas().style.cursor = "pointer";
-          });
-          map.on("mouseleave", id + "-point", () => {
-            map.getCanvas().style.cursor = "";
-          });
         })
         .catch((err) => console.warn(item.file + " 読み込みエラー:", err));
     });
@@ -203,4 +495,9 @@ map.on("load", () => {
       });
     });
   }); // end .then
+
+  loadCustomLayersFromDB();
+  setupDragAndDrop();
 });
+
+setupMotionLock();

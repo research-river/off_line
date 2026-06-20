@@ -1,7 +1,7 @@
-const CACHE = 'suijin-map-v9';
+const CACHE = 'suijin-map-v11';
 
 const APP_SHELL = [
-  './suijin_map.html',
+  './off_line_suijin_map.html',
   './main.js',
   './style.css',
   './manifest.json',
@@ -17,7 +17,7 @@ const APP_SHELL = [
   './Return_2026_kumagaya.gpx',
 ];
 
-const OFFLINE_PAGE = './suijin_map.html';
+const OFFLINE_PAGE = './off_line_suijin_map.html';
 
 self.addEventListener('install', event => {
   event.waitUntil(

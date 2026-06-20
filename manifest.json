@@ -2,7 +2,7 @@
   "name": "水神碑マップ",
   "short_name": "水神碑",
   "description": "荒川沿い水神碑フィールド調査マップ",
-  "start_url": "./suijin_map.html",
+  "start_url": "./off_line_suijin_map.html",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#f0ede8",

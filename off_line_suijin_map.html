@@ -49,8 +49,16 @@
                 />
                 熊谷復路ルート</label
             >
+            <div id="customLayerPanel" class="custom-layer-panel"></div>
         </div>
         <div id="map"></div>
+        <div id="dropHint" class="drop-hint" hidden>
+            ここにGPX/KMLファイルをドロップ
+        </div>
+        <div id="motionOverlay" class="motion-overlay">
+            <div class="motion-overlay-icon">🚴</div>
+            <p id="motionStatusText">GPS取得中です。しばらくお待ちください…</p>
+        </div>
         <script src="main.js"></script>
         <script>
             if ("serviceWorker" in navigator) {

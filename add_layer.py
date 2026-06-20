@@ -13,12 +13,17 @@ import re
 import shutil
 import sys
 import xml.etree.ElementTree as ET
-from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
-MAIN_JS = BASE_DIR / "main.js"
-SW_JS = BASE_DIR / "sw.js"
-HTML_FILE = BASE_DIR / "off_line_suijin_map.html"
+from layer_tools import (
+    BASE_DIR,
+    HTML_FILE,
+    MAIN_JS,
+    SW_JS,
+    bump_cache_version,
+    find_array_bounds,
+    list_data_file_entries,
+)
+from pathlib import Path
 
 # main.js の既存エントリと被らない配色を順番に割り当てる
 COLOR_PALETTE = [
@@ -54,19 +59,6 @@ def validate_xml(path):
         raise ValueError(f"{path.name} はXMLとして読み込めません: {error}")
 
 
-def find_array_bounds(text, var_name):
-    match = re.search(r"const " + re.escape(var_name) + r" = \[", text)
-    if not match:
-        raise ValueError(f"{var_name} 配列が見つかりません。")
-    close_index = text.index("];", match.end())
-    return match.end(), close_index
-
-
-def count_existing_entries(main_js_text):
-    start, end = find_array_bounds(main_js_text, "dataFiles")
-    return len(re.findall(r"\n\s*id:\s*[\"']", main_js_text[start:end]))
-
-
 def insert_data_file_entry(main_js_text, layer_id, filename, file_type, line_color, point_color):
     if re.search(r"id:\s*[\"']" + re.escape(layer_id) + r"[\"']", main_js_text):
         raise ValueError(f"id '{layer_id}' は main.js に既に存在します。別のidを指定してください。")
@@ -92,16 +84,6 @@ def insert_app_shell_entry(sw_js_text, filename):
     _, close_index = find_array_bounds(sw_js_text, "APP_SHELL")
     entry = f"  {rel_path},\n"
     return sw_js_text[:close_index] + entry + sw_js_text[close_index:]
-
-
-def bump_cache_version(sw_js_text):
-    def replacer(match):
-        return f"const CACHE = 'suijin-map-v{int(match.group(1)) + 1}';"
-
-    new_text, count = re.subn(r"const CACHE = 'suijin-map-v(\d+)';", replacer, sw_js_text)
-    if count == 0:
-        raise ValueError("sw.js に CACHE バージョン定義が見つかりません。")
-    return new_text
 
 
 def insert_layer_panel_checkbox(html_text, layer_id, label):
@@ -151,7 +133,7 @@ def main():
         if args.line_color and args.point_color:
             line_color, point_color = args.line_color, args.point_color
         else:
-            palette_index = count_existing_entries(main_js_text)
+            palette_index = len(list_data_file_entries(main_js_text))
             line_color, point_color = COLOR_PALETTE[palette_index % len(COLOR_PALETTE)]
 
         main_js_text = insert_data_file_entry(

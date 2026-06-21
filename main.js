@@ -402,63 +402,6 @@ function setupDragAndDrop() {
   });
 }
 
-// ============================================================
-// 走行中（停止していない）は地図を全画面メッセージで隠す
-// GPS速度が信頼できる範囲で0付近のときだけ地図を表示する
-// ============================================================
-const STOP_SPEED_THRESHOLD = 0.5; // m/s（≒1.8km/h）以下を「停止」とみなす
-const MAX_ACCEPTABLE_ACCURACY = 30; // m。これより精度が悪い測位は無視する
-const FIRST_FIX_TIMEOUT = 30000; // ms。これを過ぎても測位が一度も来なければ地図を表示する
-
-function setupMotionLock() {
-  const motionOverlay = document.getElementById("motionOverlay");
-  const motionStatusText = document.getElementById("motionStatusText");
-  let firstFixReceived = false;
-
-  function setOverlay(visible, message) {
-    motionOverlay.hidden = !visible;
-    if (message) motionStatusText.textContent = message;
-  }
-
-  if (!("geolocation" in navigator)) {
-    setOverlay(false);
-    return;
-  }
-
-  // iOS SafariはwatchPosition自体のtimeoutが効かないことがあるため、
-  // 一定時間ノー測位ならアプリ側のタイマーでフェールオープンする
-  const firstFixTimer = setTimeout(() => {
-    if (!firstFixReceived) {
-      console.warn("GPS測位がタイムアウトしたため地図を表示します");
-      setOverlay(false);
-    }
-  }, FIRST_FIX_TIMEOUT);
-
-  navigator.geolocation.watchPosition(
-    (position) => {
-      firstFixReceived = true;
-      clearTimeout(firstFixTimer);
-
-      const { speed, accuracy } = position.coords;
-
-      // 速度不明・精度不良の測位は判定に使わず、直前の表示状態を維持する
-      if (speed === null || accuracy > MAX_ACCEPTABLE_ACCURACY) return;
-
-      const isMoving = speed > STOP_SPEED_THRESHOLD;
-      setOverlay(
-        isMoving,
-        "🚴 走行中は地図を表示しません\n安全のため、停止してからご確認ください",
-      );
-    },
-    (error) => {
-      console.warn("位置情報の取得に失敗しました", error);
-      clearTimeout(firstFixTimer);
-      setOverlay(false); // GPSが使えない場合は地図を表示する（フェールオープン）
-    },
-    { enableHighAccuracy: true, maximumAge: 2000, timeout: 10000 },
-  );
-}
-
 map.on("load", () => {
   new Promise((resolve) => {
     const img = new Image();
@@ -514,5 +457,3 @@ map.on("load", () => {
   loadCustomLayersFromDB();
   setupDragAndDrop();
 });
-
-setupMotionLock();

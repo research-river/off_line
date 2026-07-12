@@ -1,4 +1,4 @@
-const CACHE = 'suijin-map-v15';
+const CACHE = 'suijin-map-v16';
 
 const APP_SHELL = [
   './off_line_suijin_map.html',

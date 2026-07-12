@@ -57,6 +57,13 @@ const dataFiles = [
     lineColor: "#961247",
     pointColor: "#3498db",
   },
+  {
+    id: "ranzanmati",
+    file: "ranzanmati.gpx",
+    type: "gpx",
+    lineColor: "#4338ca",
+    pointColor: "#4338ca",
+  },
 ];
 
 const layerIdsByGroup = {};

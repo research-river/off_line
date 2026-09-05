@@ -57,6 +57,13 @@ const dataFiles = [
     lineColor: "#961247",
     pointColor: "#3498db",
   },
+  {
+    id: "ranzantownoffice_kuzuryudragon",
+    file: "Ranzantownoffice_kuzuryudragon.gpx",
+    type: "gpx",
+    lineColor: "#4338ca",
+    pointColor: "#4338ca",
+  },
 ];
 
 const layerIdsByGroup = {};

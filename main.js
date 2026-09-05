@@ -57,13 +57,6 @@ const dataFiles = [
     lineColor: "#961247",
     pointColor: "#3498db",
   },
-  {
-    id: "2026_09ranzan_plan",
-    file: "2026_09Ranzan_Plan.kml",
-    type: "kml",
-    lineColor: "#16a34a",
-    pointColor: "#16a34a",
-  },
 ];
 
 const layerIdsByGroup = {};

@@ -1,4 +1,4 @@
-const CACHE = 'suijin-map-v19';
+const CACHE = 'suijin-map-v20';
 
 const APP_SHELL = [
   './off_line_suijin_map.html',
@@ -16,6 +16,7 @@ const APP_SHELL = [
   './Outbound_2026_kumagaya.gpx',
   './Return_2026_kumagaya.gpx',
   './ranzanmati.gpx',
+  './2026_09Ranzan_Plan.kml',
 ];
 
 const OFFLINE_PAGE = './off_line_suijin_map.html';

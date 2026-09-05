@@ -3,6 +3,46 @@
   <Document>
     <name>その5_トイレマップ</name>
     <description/>
+    <Style id="icon-1671-1A237E-nodesc-normal">
+      <IconStyle>
+        <color>ff7e231a</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1671-1A237E-nodesc-highlight">
+      <IconStyle>
+        <color>ff7e231a</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1671-1A237E-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1671-1A237E-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1671-1A237E-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
     <Style id="icon-1677-F57C00-normal">
       <IconStyle>
         <color>ff007cf5</color>
@@ -35,6 +75,46 @@
       <Pair>
         <key>highlight</key>
         <styleUrl>#icon-1677-F57C00-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Style id="icon-1677-FF5252-nodesc-normal">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="icon-1677-FF5252-nodesc-highlight">
+      <IconStyle>
+        <color>ff5252ff</color>
+        <scale>1</scale>
+        <Icon>
+          <href>https://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="icon-1677-FF5252-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1677-FF5252-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1677-FF5252-nodesc-highlight</styleUrl>
       </Pair>
     </StyleMap>
     <Style id="icon-1733-F57C00-nodesc-normal">
@@ -1933,11 +2013,11 @@
       </Placemark>
       <Placemark>
         <name>船堀日枝神社</name>
-        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AE5a_GxdanwVb-EtxHHYS_kKIJDnzQbbDlgLQOBDXn3F4ezHhvJDNCzVgkZZPjj5MKifEC983pk7-JqzMKVXXIzohLKcL9bjkwd6AJ4I0Tl4tKvmCIrKBfq9O3VWmB6bl0E_QAQfLqaKCdFh4IQnmSNfjPkYzT93xx_E7W7MFTEnpiemQfyGNGelVJE-SuLcXYNBd_ceoURhnjwUMnjhuUw_QArthrYZJ0srTrbq9J3Z24Wkl1BPOX2O8W6ipYs?authuser=0&fife=s16383" height="200" width="auto" /><br><br>]]></description>
+        <description><![CDATA[<img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6wyfYqWFAo81TRoqmTkqVEsgAi56q28q9ceaN0JowPwaAwTiZGUcAdF8n4gEJD-53wbOSfaHRq_Ta4j5wAcTR_-E_NPODnIZZ6fxX6oMET-UdFtFkAK3KSdHif0UiiO346Ir2BPlRYb8VDmJmYzXoAvs-HAhts4XhfU4LYH4KW00BfNu5xMj_cVuryfota0miGz6yXQE1gWNUL2stFivf0i8pspnrSoEVl2FqwuRaJt_DKhbfbCA18-bM?authuser=0&fife=s16383" height="200" width="auto" /><br><br>]]></description>
         <styleUrl>#icon-1677-F57C00</styleUrl>
         <ExtendedData>
           <Data name="gx_media_links">
-            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AE5a_GxdanwVb-EtxHHYS_kKIJDnzQbbDlgLQOBDXn3F4ezHhvJDNCzVgkZZPjj5MKifEC983pk7-JqzMKVXXIzohLKcL9bjkwd6AJ4I0Tl4tKvmCIrKBfq9O3VWmB6bl0E_QAQfLqaKCdFh4IQnmSNfjPkYzT93xx_E7W7MFTEnpiemQfyGNGelVJE-SuLcXYNBd_ceoURhnjwUMnjhuUw_QArthrYZJ0srTrbq9J3Z24Wkl1BPOX2O8W6ipYs?authuser=0&fife=s16383]]></value>
+            <value><![CDATA[https://mymaps.usercontent.google.com/hostedimage/m/*/3AAjQbR6wyfYqWFAo81TRoqmTkqVEsgAi56q28q9ceaN0JowPwaAwTiZGUcAdF8n4gEJD-53wbOSfaHRq_Ta4j5wAcTR_-E_NPODnIZZ6fxX6oMET-UdFtFkAK3KSdHif0UiiO346Ir2BPlRYb8VDmJmYzXoAvs-HAhts4XhfU4LYH4KW00BfNu5xMj_cVuryfota0miGz6yXQE1gWNUL2stFivf0i8pspnrSoEVl2FqwuRaJt_DKhbfbCA18-bM?authuser=0&fife=s16383]]></value>
           </Data>
         </ExtendedData>
         <Point>
@@ -2051,6 +2131,132 @@
         <Point>
           <coordinates>
             139.3320292,36.0310749,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3221088,36.0570084,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>花見台第一公園 公衆トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3224915,36.0768327,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>花見台第一公園グラウンド 公衆トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3215614,36.0777174,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>花見台第二公園 公衆トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3133822,36.0775445,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>テラバーガー自販機 RANZAN</name>
+        <styleUrl>#icon-1671-1A237E-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3225059,36.0460992,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>厳島神社　弁財天</name>
+        <styleUrl>#icon-1677-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.323056,36.041062,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3229609,36.0376869,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>菅谷公園 公衆トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3224796,36.0412509,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>鶴巻運動公園 公衆トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3278342,36.0505885,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>御手洗</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.2900583,36.0461861,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>大蔵神社内のトイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3289658,36.0276908,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>嵐山町総合運動公園 公衆トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3204757,36.0274691,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>歴史の里公園 多機能トイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.3128265,36.0218902,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>バイオトイレ</name>
+        <styleUrl>#icon-1733-FF5252-nodesc</styleUrl>
+        <Point>
+          <coordinates>
+            139.2985095,36.0320943,0
           </coordinates>
         </Point>
       </Placemark>

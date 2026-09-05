@@ -58,13 +58,6 @@ const dataFiles = [
     pointColor: "#3498db",
   },
   {
-    id: "ranzanmati",
-    file: "ranzanmati.gpx",
-    type: "gpx",
-    lineColor: "#4338ca",
-    pointColor: "#4338ca",
-  },
-  {
     id: "2026_09ranzan_plan",
     file: "2026_09Ranzan_Plan.kml",
     type: "kml",
